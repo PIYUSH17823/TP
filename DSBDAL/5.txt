@@ -1,0 +1,99 @@
+1.import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+
+2.df.shape
+
+3.df.columns
+
+4.df.dtypes
+
+5.df.info()
+
+6.df.describe()
+
+7.x = df.iloc[:,[2,3]].values
+//Part	                                         Meaning
+df	                            Your DataFrame (the table you loaded from Social_Network_Ads.csv)
+.iloc[:, [2, 3]]	            iloc means index location — you're selecting columns by their index numbers.
+:	                            Select all rows (no row filtering)
+[2, 3]	                            Select only column number 2 and 3
+.values	                            Convert it into a NumPy array (instead of a pandas DataFrame)
+
+8.x
+
+9.y = df.iloc[:,4].values
+
+10.y
+
+11.from sklearn.model_selection import train_test_split
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.25, random_state=42)
+//✅ Because we need an easy, fast, and correct way to split our data into training and testing parts.
+Part	                                         Meaning
+x					The input features (Age, Salary)
+y					The output labels (Purchased: 0 or 1)
+test_size=0.25				25% of the data goes to testing, 75% goes to training
+random_state=42				To ensure the same split every time you run (for consistency)
+
+12.x_train
+13.x_test.shape
+14.y_test
+15.x_train
+16.from sklearn.linear_model import LogisticRegression  //You are predicting if a person purchases or does not purchase that why imported
+ classifier = LogisticRegression(random_state= 0)       //random_state=0 ensures that any internal randomness (like solver initialization) is the same every time you run the code (for reproducibility).
+ classifier.fit(x_train,y_train)                        //Fit means train the model.
+
+17.y_pred = classifier.predict(x_test)
+//Term | Meaning
+x_test | New input data (Age, Salary)
+classifier.predict(x_test) | Predicts Purchase (0 or 1) for each row
+y_pred | Stores all the predicted results
+
+18.y_test
+
+19.from sklearn.metrics import confusion_matrix
+ cm = confusion_matrix(y_test,y_pred)
+ cm
+TP → Correctly predicted 1s
+
+TN → Correctly predicted 0s
+
+FP → Wrongly predicted 1 (but actual is 0)
+
+FN → Wrongly predicted 0 (but actual is 1)
+
+20.from sklearn.metrics import accuracy_score
+ accuracy = accuracy_score(y_test,y_pred) * 100
+//Accuracy = (Correct Predictions / Total Predictions) × 100
+
+21.accuracy
+22. tp = cm[0,[0]]
+ print('True Poositive:',tp)
+23.tn = cm[1,[1]]
+ print('True Negative',tn)
+24.fp = cm[0,[1]]
+ print('False Positive: ', fp)
+25.fn = cm[1,[0]]
+ print('False Negatve',fn)
+26.accuracy_cm = ((tp+tn)/(tp+fp+fn+tn))
+ print('Accuracy : ',accuracy_cm*100)
+27.error_rate_cm = ((fp+fn)/(tp+fp+fn+tn))
+ print('Error rate : ',error_rate_cm*100)
+
+28.precision_cm = (tp/ (tp+fp))
+ print('Precision : ',precision_cm*100)
+//Out of all the times the model said "Yes" (predicted 1),
+How many times was it actually correct?
+
+29.recall_cm = (tp/(tp+fn))
+ print('Sensitivity : ',recall_cm*100)
+Out of all the actual positives,
+
+How many did the model correctly identify?
+
+30.specificity_cm = (tn/(tn+fp))
+ print('Specificity : ',specificity_cm *100)
+Out of all the actual negatives,
+How many did the model correctly identify as negative?
