@@ -1,0 +1,13 @@
+from collections import defaultdict
+
+line = input("Enter a sentence: ")  # Takes one line of input
+line = line.strip().lower().replace(".", " ")
+words = line.split()
+
+word_count = defaultdict(int)
+
+for word in words:
+    word_count[word] += 1
+
+for word, count in word_count.items():
+    print(f'{count}\t{word}')

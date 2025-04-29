@@ -1,0 +1,103 @@
+
+2.
+import pandas ad pd
+import matplotlib 
+import numpy as np
+
+df = pd.read_csv( '/home/stes/Documents/CSV File/student performance.csv' )
+
+df.isnull().sum()
+
+df.dtype
+
+df [ 'Maths Score' ] = df [ 'Maths Score' ]. interpolate () 
+
+df
+
+df [ 'ReadingScore' ] = df [ 'ReadingScore' ]. interpolate ()
+
+df
+
+df [ 'ReadingScore' ] = df [ 'ReadingScore' ].fillna(method='ffill') 
+
+df
+
+df [ 'Placement Score' ] = df [ 'Placement Score' ]. interpolate () 
+
+df
+
+df['Club Join Date'] = df['Club Join Date'].replace(to_replace=np.NaN, value=2024)
+
+df
+
+df.dtypes
+
+df['Maths Score']= df['Maths Score'].astype('int64') 
+df['ReadingScore']= df['ReadingScore'].astype('int64') 
+df['Writing Score']= df['Writing Score'].astype('int64') 
+df['Placement Score']= df['Placement Score'].astype('int64') 
+df['Club Join Date']= df['Club Join Date'].astype('int64') 
+
+df.dtypes 
+
+columns = [ 'Maths Score' , 'ReadingScore' , 'Writing Score' , 'Placement Score' , 'Club Join Date' , 'Placement offer Scores']
+
+df.boxplot( columns )
+
+np.where(df['Maths Score']>60)
+
+np.where(df['Maths Score']<60)
+
+np.where(df['ReadingScore']>90)
+
+np.where(df['ReadingScore']>60)
+
+np.where(df['WritingScore']<20)
+
+np.where(df['WritingScore']<60)
+
+np.where(df['WritingScore']<55)
+
+np.where(df['PlacementScore']<75)
+
+np.where(df['PlacementScore']<65)
+
+np.where(df['Club Joining Date']<2020)
+
+np.where(df['Club Joining Date']<2010)
+
+df[(df['Maths Score']<60) | (df['Maths Score']>80)]
+
+df[(df['ReadingScore']<70)|(df['ReadingScore']>90)] 
+
+df[(df['Writing Score']<20)|(df['Writing Score']>50)] 
+
+df [( df [ 'Placement Score' ] < 10 ) | ( df [ 'Placement Score' ] > 90 )] 
+
+df[(df['Club Join Date']<2015)|(df['Club Join Date']>2020)] 
+
+df[(df['Club Join Date']<2015)|(df['Club Join Date']>2020)] 
+
+df [( df [ 'Maths Score' ] >= 60 ) & ( df [ 'Maths Score' ] <= 80 )] 
+
+new_df = df[(df['Maths Score']>=60)&(df['Maths Score']<=80)] 
+
+new_df 
+
+col = ['MathScore','ReadingScore','WritingScore','PlacementScore','ClubJoinedDate','PlacementOfferScore']
+from sklearn.preprocessing import MinMaxScaler
+scaler = MinMaxScaler()
+scaler.fit_transform(new_df[col])
+
+new_df
+
+
+
+
+
+
+
+
+
+
+ 

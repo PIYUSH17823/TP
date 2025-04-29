@@ -1,0 +1,34 @@
+ import pandas as pd
+ import numpy as np
+ import matplotlib.pyplot as plt
+ %matplotlib inline
+ import seaborn as sns
+
+df =pd.read_csv('OneDrive/Desktop/iris.csv')
+df
+
+df.shape
+
+df.columns
+
+df.dtypes
+
+df.info()
+
+df.describe()
+
+df.drop(['Species'],axis=1,inplace=True)
+
+plt.hist(df['sepal_length'])
+plt.hist(df['sepal_width'])
+plt.hist(df['petal_length'])
+plt.hist(df['petal_width'])
+
+sns.boxplot(df['sepal_length'])
+sns.boxplot(df['sepal_width'])
+sns.boxplot(df['petal_length'])
+sns.boxplot(df['petl_width'])
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\//////////////////////////////////////
+sns.boxplot(data=df,x=df['species'],y=df['sepal_width'])
+

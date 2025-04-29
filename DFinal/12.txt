@@ -1,0 +1,28 @@
+from collections import defaultdict
+from io import StringIO
+import sys
+
+# Simulate stdin manually
+test_input = """INFO Starting server
+ERROR Could not connect to database
+WARN Disk space low
+INFO Request completed
+ERROR User authentication failed
+"""
+
+sys.stdin = StringIO(test_input)
+
+# Dictionary to store counts of log levels
+log_count = defaultdict(int)
+
+for line in sys.stdin:
+    line = line.strip()
+    
+    if line:
+        parts = line.split()
+        log_level = parts[0].upper()
+        log_count[log_level] += 1
+
+# Output the results
+for log_level, count in log_count.items():
+    print(f'{count}\t{log_level}')

@@ -1,0 +1,67 @@
+6.
+
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score
+
+df = pd.read_csv("Iris_dataset.csv")
+df
+
+df.shape
+df.columns
+df.dtypes
+df.info()
+df.describe()
+
+df.isnull().sum()#if not cleaned, clean it
+
+x = df.drop("flower_name", axis = 1)
+y = df["flower_name"]
+
+X_train, X_test, Y_train, Y_test = train_test_split(x, y, test_size = 0.2, random_state = 42)
+
+model = GaussianNB() 
+model.fit(X_train, Y_train)
+
+y_pred = model.predict(X_test)
+y_pred
+
+#part2
+labels = model.classes_
+cm = confusion_matrix(Y_test, y_pred, labels = labels)
+
+print("Confusion Matrix : ")
+print(pd.DataFrame(cm, index = labels, columns = labels))
+
+for i, label in enumerate(labels):
+    TP = cm[i, i]
+    FP = cm[:, i].sum() - TP
+    FN = cm[i, :].sum() - TP
+    TN = cm.sum() - (TP + FP + FN)
+
+    Accuracy = (TP + TN) / (TP + TN + FP + FN)
+    Error_rate = 1 - Accuracy
+    Precision = TP / (TP + FP) if (TP + FP) != 0 else 0
+    Recall = TP / (TP + FN) if (TP + FN) != 0 else 0
+
+    print(f"\nClass: {label}")
+    print(f"TP: {TP}, FP: {FP}, TN: {TN}, FN: {FN}")
+    print(f"Accuracy: {Accuracy:.4f}")
+    print(f"Error rate: {Error_rate:.4f}")
+    print(f"Precision: {Precision:.4f}")
+    print(f"Recall: {Recall:.4f}")
+
+#plotting CM
+import matplotlib.pyplot as plt
+import seaborn as sns
+plt.figure(figsize=(6, 5))
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
+            xticklabels=labels,
+            yticklabels=labels)
+
+plt.title('Confusion Matrix')
+plt.xlabel('Predicted Label')
+plt.ylabel('True Label')
+plt.show()

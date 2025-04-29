@@ -1,0 +1,47 @@
+3.
+
+import pandas ad pd
+import matplotlib 
+import numpy as np
+
+df = pd.read_csv( '/home/stes/Documents/CSV File/student iris.csv' )
+
+df.isnull().sum()
+
+df.dtype
+
+df.describe()
+
+df.info()
+
+grouped = df.groupby('flower_name')
+
+summary = grouped[['SepalLengthcm', 'Sepalwidthcm', 'PetalLengthcm' , 'PetalWithcm']]
+print(summary)
+
+setosa = df[df['flower_name']== 'setosa']
+print("\nSetosa Description:\n")
+print(setosa.describe())
+
+virginica = df[df['flower_name'] == 'virginica']
+print("\nVirginica Description:\n")
+print(virginica.describe())
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+df.drop(columns= 'Id', inplace=True)
+
+np.mean(df['SepalLengthcm'])   /// do same with std,min,max
+np.mean(df['Sepalwidthcm'])
+np.mean(df['PetalLengthcm'])
+np.mean(df['PetalWithcm'])
+
+np.std(df)
+
+df.quantile(0.25) 
+//The method df.quantile(0.25) calculates the 25th                       percentile (first quartile, Q1) of the data in a pandas DataFrame or Series. 
+
+df.quantile(0.50)
+
+df.quantile(0.75) 
+ 
