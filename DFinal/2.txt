@@ -1,95 +1,50 @@
 
-2.
-import pandas ad pd
-import matplotlib 
+import pandas as pd
 import numpy as np
 
-df = pd.read_csv( '/home/stes/Documents/CSV File/student performance.csv' )
+data = {
+    'Student_ID': [1, 2, 3, 4, 5, 6, 7],
+    'Name': ['Alice', 'Bob', 'Charlie', 'David', 'Eva', 'Frank', 'Grace'],
+    'Math_Score': [85, 90, np.nan, 40, 95, 20, 88],
+    'Science_Score': [78, 85, 82, np.nan, 99, 55, 89],
+    'Attendance': [0.9, 0.85, 0.7, 0.6, 1.0, 0.2, 0.95]
+}
+df = pd.DataFrame(data)
 
-df.isnull().sum()
+print("Missing Values:")
+print(df.isnull().sum())
 
-df.dtype
+df['Math_Score'] = df['Math_Score'].fillna(df['Math_Score'].mean())
+df['Science_Score'] = df['Science_Score'].fillna(df['Science_Score'].mean())
+print(df.isnull().sum())
 
-df [ 'Maths Score' ] = df [ 'Maths Score' ]. interpolate () 
 
-df
+def detect_outliers(col):
+    Q1 = df[col].quantile(0.25)
+    Q3 = df[col].quantile(0.75)
+    IQR = Q3 - Q1
+    lower_bound = Q1 - 1.5 * IQR
+    upper_bound = Q3 + 1.5 * IQR
+    outliers = df[(df[col] < lower_bound) | (df[col] > upper_bound)]
+    return outliers
 
-df [ 'ReadingScore' ] = df [ 'ReadingScore' ]. interpolate ()
+print("\nOutliers in Math Score:")
+print(detect_outliers('Math_Score'))
 
-df
+print("\nOutliers in Science Score:")
+print(detect_outliers('Science_Score'))
 
-df [ 'ReadingScore' ] = df [ 'ReadingScore' ].fillna(method='ffill') 
+print("\nOutliers in Attendance:")
+print(detect_outliers('Attendance'))
 
-df
+df['Attendance'] = np.where(df['Attendance'] < 0.3, 0.3, df['Attendance'])
+df['Math_Score'] = np.where(df['Math_Score'] < 40, 40, df['Math_Score'])
 
-df [ 'Placement Score' ] = df [ 'Placement Score' ]. interpolate () 
+#part3 transformation normally skewed
+df['Attendance_Log'] = np.log(df['Attendance'])
 
-df
-
-df['Club Join Date'] = df['Club Join Date'].replace(to_replace=np.NaN, value=2024)
-
-df
-
-df.dtypes
-
-df['Maths Score']= df['Maths Score'].astype('int64') 
-df['ReadingScore']= df['ReadingScore'].astype('int64') 
-df['Writing Score']= df['Writing Score'].astype('int64') 
-df['Placement Score']= df['Placement Score'].astype('int64') 
-df['Club Join Date']= df['Club Join Date'].astype('int64') 
-
-df.dtypes 
-
-columns = [ 'Maths Score' , 'ReadingScore' , 'Writing Score' , 'Placement Score' , 'Club Join Date' , 'Placement offer Scores']
-
-df.boxplot( columns )
-
-np.where(df['Maths Score']>60)
-
-np.where(df['Maths Score']<60)
-
-np.where(df['ReadingScore']>90)
-
-np.where(df['ReadingScore']>60)
-
-np.where(df['WritingScore']<20)
-
-np.where(df['WritingScore']<60)
-
-np.where(df['WritingScore']<55)
-
-np.where(df['PlacementScore']<75)
-
-np.where(df['PlacementScore']<65)
-
-np.where(df['Club Joining Date']<2020)
-
-np.where(df['Club Joining Date']<2010)
-
-df[(df['Maths Score']<60) | (df['Maths Score']>80)]
-
-df[(df['ReadingScore']<70)|(df['ReadingScore']>90)] 
-
-df[(df['Writing Score']<20)|(df['Writing Score']>50)] 
-
-df [( df [ 'Placement Score' ] < 10 ) | ( df [ 'Placement Score' ] > 90 )] 
-
-df[(df['Club Join Date']<2015)|(df['Club Join Date']>2020)] 
-
-df[(df['Club Join Date']<2015)|(df['Club Join Date']>2020)] 
-
-df [( df [ 'Maths Score' ] >= 60 ) & ( df [ 'Maths Score' ] <= 80 )] 
-
-new_df = df[(df['Maths Score']>=60)&(df['Maths Score']<=80)] 
-
-new_df 
-
-col = ['MathScore','ReadingScore','WritingScore','PlacementScore','ClubJoinedDate','PlacementOfferScore']
-from sklearn.preprocessing import MinMaxScaler
-scaler = MinMaxScaler()
-scaler.fit_transform(new_df[col])
-
-new_df
+print("\nFinal Dataset:")
+print(df)
 
 
 
