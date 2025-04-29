@@ -30,7 +30,7 @@ df
 
 df.isnull().sum()
 
-df["Embarked"]=df["Embarked"].fillna(method='ffill' , inplace = True)
+df["Embarked"].fillna(method='ffill' , inplace = True)
 
 df['Age']=df['Age'].astype('int64')
 
